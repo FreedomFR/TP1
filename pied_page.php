@@ -1,3 +1,3 @@
 <footer>
- <small>© Copyright 2013, TAB</small>
+ <small>© Copyright 2019, FreedomFR</small>
 </footer>
