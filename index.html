@@ -378,13 +378,13 @@
         var divCarre = document.getElementById("divCarre");
         if(type == 'rect')
         {
-            console.log(divCercle);
+            //console.log(divCercle);
             divCarre.style.display = "block";
             divCercle.style.display = "none";
         }
         if(type == 'circle')
         {
-            console.log(divCercle);
+            //console.log(divCercle);
             divCarre.style.display = "none";
             divCercle.style.display = "block";
         }
@@ -471,7 +471,7 @@
                     div.appendChild(map);
 
                     let divVoirArea = document.getElementById("voirArea");
-                    let rect = document.createElement('div');
+                    let rect = document.createElement('button');
                     rect.style.position = 'absolute';
                     rect.style.left = x1.value + 'px';
                     rect.style.top = y1.value + 'px';
@@ -569,7 +569,7 @@
                 getEnsemblePoint();
                 changerDiv(type);
 
-                console.log(objetmap);
+                //console.log(objetmap);
 
 
                 function getEnsemblePoint()
@@ -808,8 +808,7 @@
                 }
             }
 
-            $("div[name=voirArea]").on('click', function () {
-
+            $("voirArea").on('click', function () {
 
                 let id = $(this).attr('id');
 
