@@ -1,0 +1,62 @@
+.container {
+    text-align: center;
+    width: 100%;
+    min-height: 90vh;
+    margin-top: 20px;
+}
+.div1 {
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+.div2 {
+    width: 50%;
+    float: right;
+    height: 100%;
+}
+
+#rotateMode{
+    margin: 0 auto;
+    border-radius: 50%;
+    width: 125px;
+    height: 125px;
+    background-color: gray;
+    color:white;
+    /* USE FLEXBOX */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.top,
+.middle,
+.bottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.top,
+.bottom {
+    justify-content: center;
+}
+
+.middle {
+    justify-content: space-between;
+}
+
+.pointObjet{
+    margin: 0 auto;
+    border-color: black;
+    border-style: solid;
+    width: 50%;
+}
+
+
+.imgUse{
+    max-width:2000px;
+    max-height:2000px;
+    min-height: 400px;
+    min-width: 400px;
+    width: auto;
+    height: auto;
+    border: 1px solid #555;
+}
