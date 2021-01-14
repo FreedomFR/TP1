@@ -50,12 +50,11 @@
     width: 50%;
 }
 
-
 .imgUse{
     max-width:2000px;
     max-height:2000px;
-    min-height: 400px;
-    min-width: 400px;
+    min-height: 570px;
+    min-width: 570px;
     width: auto;
     height: auto;
     border: 1px solid #555;

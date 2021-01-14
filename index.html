@@ -8,8 +8,9 @@
     <body>
     <div class="container">
         <div class="div1" id="div-add">
-            <div id="voirArea"></div>
-            <img usemap="#shapes-map" src="images/Krustytheclown.png" alt="image" class="imgUse">
+            <div id="voirArea" style="position: relative;">
+                <img src="images/Krustytheclown.png" usemap="#shapes-map"  alt="image" class="imgUse" id="divV">
+            </div>
             <map name="shapes-map" id="map"></map>
             <br>
             <br>
@@ -457,9 +458,6 @@
 
                     let map = document.getElementById("map");
 
-                    let divVoirArea = document.getElementById("voirArea");
-
-
                     let area = document.createElement("area");
                     area.shape = type;
                     area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
@@ -472,14 +470,19 @@
                     let div = document.getElementById("div-add");
                     div.appendChild(map);
 
+                    let divVoirArea = document.getElementById("voirArea");
                     let rect = document.createElement('div');
                     rect.style.position = 'absolute';
                     rect.style.left = x1.value + 'px';
                     rect.style.top = y1.value + 'px';
+                    rect.style.zIndex = "10";
+                    rect.style.display = "block";
                     rect.style.width = x2.value + 'px';
                     rect.style.height = y2.value + 'px';
                     rect.style.borderColor = "red";
                     rect.style.borderStyle = "solid";
+                    rect.onclick = deplacer;
+                    rect.id = (idArea).toString();
                     divVoirArea.appendChild(rect);
 
                     //console.log(objetmap);
@@ -536,9 +539,8 @@
                 alert('Choisir son type');
             }
 
-
-            $("map[name=shapes-map] area").on('click', function () {
-
+            function deplacer()
+            {
 
                 let id = $(this).attr('id');
 
@@ -568,6 +570,7 @@
                 changerDiv(type);
 
                 console.log(objetmap);
+
 
                 function getEnsemblePoint()
                 {
@@ -803,6 +806,13 @@
                     let area = document.getElementById(id);
                     area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
                 }
+            }
+
+            $("div[name=voirArea]").on('click', function () {
+
+
+                let id = $(this).attr('id');
+
             });
         };
     });
