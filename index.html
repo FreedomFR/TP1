@@ -60,6 +60,7 @@
                     <button id="bas" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-down"></span></button>
                 </div>
             </div>
+            Posiblilité d'utiliser les flèches du clavier
             <br>
             <br>
             <br>
@@ -317,6 +318,8 @@
             });
         }
 
+
+
         TestAfficherObjetDansConsole()
         {
             console.log(this);
@@ -406,21 +409,12 @@
         let xc1;
         let yc1;
         let rayon;
-        //console.log(id);
-        document.getElementById('idAir').value = id;
-        //alert($(this).attr('id'));
 
-        //console.log(myobjectArea.ensembleObjectPoint);
-        // var result = myobjectArea.ensembleObjectPoint.filter(obj => {
-        //
-        // })
-        //console.log(objetmap.getObjetCarre(id));
+        document.getElementById('idAir').value = id;
+
         let objetAll = objetmap.getObjet(id);
         getEnsemblePoint();
         changerDiv(type);
-
-        //console.log(objetmap);
-
 
         function getEnsemblePoint()
         {
@@ -555,6 +549,9 @@
                 let area = document.getElementById("area" + id);
                 let div = document.getElementById("div" + id);
 
+                div.style.left = xc1 - rayon + "px";
+                div.style.top = yc1 - rayon + "px";
+
                 area.coords = xc1 + ',' + yc1 + ',' + rayon;
 
                 document.getElementById('xc1').value = (parseX).toString();
@@ -624,6 +621,9 @@
                 let area = document.getElementById("area" + id);
                 let div = document.getElementById("div" + id);
 
+                div.style.left = xc1 - rayon + "px";
+                div.style.top = yc1 - rayon + "px";
+
                 area.coords = xc1 + ',' + yc1 + ',' + rayon;
 
                 document.getElementById('xc1').value = (parseX).toString();
@@ -692,6 +692,8 @@
                 let area = document.getElementById("area" + id);
                 let div = document.getElementById("div" + id);
 
+                div.style.top = yc1 - rayon + "px";
+                div.style.left = xc1 - rayon + "px";
                 area.coords = xc1 + ',' + yc1 + ',' + rayon;
 
                 document.getElementById('yc1').value = (parseY).toString();
@@ -760,6 +762,9 @@
                 let area = document.getElementById("area" + id);
                 let div = document.getElementById("div" + id);
 
+                div.style.top = yc1 - rayon + "px";
+                div.style.left = xc1 - rayon + "px";
+
                 area.coords = xc1 + ',' + yc1 + ',' + rayon;
 
                 document.getElementById('yc1').value = (parseY).toString();
@@ -788,74 +793,103 @@
 
         document.getElementById('modifier').onclick = function()
         {
-            // Point 1
-            let x1 = document.getElementById("x1");
-            let y1 = document.getElementById("y1");
 
-            // point 2
-            let x2 = document.getElementById("x2");
-            let y2 = document.getElementById("y2");
+            if(type == "rect")
+            {
+                // Point 1
+                let x1 = document.getElementById("x1");
+                let y1 = document.getElementById("y1");
 
-            // Si valeur null
-            if(x1.value.length === 0)
-            {
-                x1.value = 0;
-            }
-            if(y1.value.length === 0)
-            {
-                y1.value = 0;
-            }
-            if(x2.value.length === 0)
-            {
-                x2.value = 50;
-            }
-            if(y2.value.length === 0)
-            {
-                y2.value = 50;
-            }
+                // point 2
+                let x2 = document.getElementById("x2");
+                let y2 = document.getElementById("y2");
 
-            objetmap.changeXMap(x1.value, id, 0);
-            objetmap.changeXMap(x2.value, id, 1);
-            objetmap.changeYMap(y1.value, id, 0);
-            objetmap.changeYMap(y2.value, id, 1);
+                // Si valeur null
+                if(x1.value.length === 0)
+                {
+                    x1.value = 0;
+                }
+                if(y1.value.length === 0)
+                {
+                    y1.value = 0;
+                }
+                if(x2.value.length === 0)
+                {
+                    x2.value = 50;
+                }
+                if(y2.value.length === 0)
+                {
+                    y2.value = 50;
+                }
 
-            let area = document.getElementById("area" + id);
-            let div = document.getElementById("div" + id);
+                objetmap.changeXMap(x1.value, id, 0);
+                objetmap.changeXMap(x2.value, id, 1);
+                objetmap.changeYMap(y1.value, id, 0);
+                objetmap.changeYMap(y2.value, id, 1);
 
-            if(parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
-            {
-                div.style.width = (x2.value - x1.value) + 'px';
-                div.style.height = (y2.value - y1.value) + 'px';
-                div.style.left = x1.value + 'px';
-                div.style.top = y1.value + 'px';
-            }
-            else if(parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
-            {
-                div.style.width = (x1.value - x2.value) + 'px';
-                div.style.height = (y1.value - y2.value) + 'px';
-                div.style.left = x1.value - (x1.value - x2.value) + 'px';
-                div.style.top = y1.value - (y1.value - y2.value) + 'px';
-            }
-            else if (parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
-            {
-                div.style.width = (x2.value - x1.value) + 'px';
-                div.style.height = (y1.value - y2.value) + 'px';
-                div.style.left =  x1.value + 'px';
-                div.style.top = y1.value - (y1.value - y2.value) + 'px';
-            }
-            else if (parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
-            {
-                div.style.width = (x1.value - x2.value) + 'px';
-                div.style.height = (y2.value - y1.value) + 'px';
-                div.style.left = x1.value - (x1.value - x2.value) + 'px';
-                div.style.top = y1.value + 'px';
-            }
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
 
-            area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
+                if(parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+                {
+                    div.style.width = (x2.value - x1.value) + 'px';
+                    div.style.height = (y2.value - y1.value) + 'px';
+                    div.style.left = x1.value + 'px';
+                    div.style.top = y1.value + 'px';
+                }
+                else if(parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+                {
+                    div.style.width = (x1.value - x2.value) + 'px';
+                    div.style.height = (y1.value - y2.value) + 'px';
+                    div.style.left = x1.value - (x1.value - x2.value) + 'px';
+                    div.style.top = y1.value - (y1.value - y2.value) + 'px';
+                }
+                else if (parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+                {
+                    div.style.width = (x2.value - x1.value) + 'px';
+                    div.style.height = (y1.value - y2.value) + 'px';
+                    div.style.left =  x1.value + 'px';
+                    div.style.top = y1.value - (y1.value - y2.value) + 'px';
+                }
+                else if (parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+                {
+                    div.style.width = (x1.value - x2.value) + 'px';
+                    div.style.height = (y2.value - y1.value) + 'px';
+                    div.style.left = x1.value - (x1.value - x2.value) + 'px';
+                    div.style.top = y1.value + 'px';
+                }
+
+                area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
+            }
+            else if (type == "circle")
+            {
+                // Point 1
+                let xc1 = document.getElementById("xc1");
+                let yc1 = document.getElementById("yc1");
+
+                // rayon
+                let rayon = document.getElementById("rayon");
+
+                if(xc1.value.length === 0)
+                {
+                    xc1.value = 50;
+                }
+                if(yc1.value.length === 0)
+                {
+                    yc1.value = 50;
+                }
+                if(rayon.value.length === 0)
+                {
+                    rayon.value = 30;
+                }
+
+
+            }
         }
     }
 
     let objetmap = new objectMap('images/Krustytheclown.png', 'krusty', []);
+
     document.getElementById('creer').onclick = function()
     {
         let select = document.getElementById("type");
@@ -930,7 +964,7 @@
                 div.appendChild(map);
 
                 let divVoirArea = document.getElementById("voirArea");
-                let rect = document.createElement('button');
+                let rect = document.createElement('div');
                 rect.style.position = 'absolute';
                 rect.style.display = "block";
                 rect.style.opacity = "0.5";
@@ -965,6 +999,8 @@
                 }
 
                 rect.style.borderColor = "red";
+                rect.style.borderWidth = "2px";
+                rect.style.backgroundColor = "rgba(51, 170, 51, .4)";
                 rect.style.borderStyle = "solid";
                 rect.setAttribute("onClick", "deplacer(" + idArea + ")");
                 rect.id = "div" + (idArea).toString();
@@ -983,15 +1019,15 @@
 
                 if(xc1.value.length === 0)
                 {
-                    xc1.value = 0;
+                    xc1.value = 50;
                 }
                 if(yc1.value.length === 0)
                 {
-                    yc1.value = 0;
+                    yc1.value = 50;
                 }
                 if(rayon.value.length === 0)
                 {
-                    rayon.value = 50;
+                    rayon.value = 30;
                 }
 
                 let myObjetPoint = new objectPoint(xc1.value, yc1.value, rayon.value);
@@ -1010,12 +1046,30 @@
                 area.coords = xc1.value + ',' + yc1.value + ',' + rayon.value;
                 area.className = "areaMap";
                 area.href = "#";
-                area.id = (idArea).toString();
+                area.id = "area" + (idArea).toString();
 
                 map.appendChild(area);
 
                 let div = document.getElementById("div-add");
                 div.appendChild(map);
+
+                let divVoirArea = document.getElementById("voirArea");
+                let cercle = document.createElement('div');
+
+                cercle.style.position = "absolute";
+                cercle.style.borderRadius = "50%";
+                cercle.style.height = rayon.value * 2 + "px";
+                cercle.style.width = rayon.value * 2 + "px";
+                cercle.style.borderColor = "blue";
+                cercle.style.borderWidth = "2px";
+                cercle.setAttribute("onClick", "deplacer(" + idArea + ")");
+                cercle.style.borderStyle = "solid";
+                cercle.style.top = xc1.value - rayon.value + "px";
+                cercle.style.left = yc1.value - rayon.value + "px";
+
+
+                cercle.id = "div" + (idArea).toString();
+                divVoirArea.appendChild(cercle);
 
             }
         }
@@ -1023,14 +1077,6 @@
         {
             alert('Choisir son type');
         }
-
-        // $("button[name=voirArea]").on('click', function () {
-        //
-        //     let id = $(this).attr('id');
-        //     //console.log(id);
-        //
-        // });
-
     };
     $(document).ready(function () {
         // let nomMap = document.getElementById('nomMap');
