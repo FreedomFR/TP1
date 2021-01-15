@@ -145,7 +145,7 @@
                 if (parseInt(element.getId()) === parseInt(id))
                 {
                     element.setChangeX(x, t);
-                    console.log(element);
+                    //console.log(element);
                 }
             });
         }
@@ -155,7 +155,7 @@
                 if (parseInt(element.getId()) === parseInt(id))
                 {
                     element.setChangeY(y, t);
-                    console.log(element);
+                    //console.log(element);
                 }
             });
         }
@@ -201,17 +201,17 @@
                 if(t === 0)
                 {
                     element[0].changeY(y);
-                    console.log(element[0]);
+                    // console.log(element[0]);
                 }
                 else if(t === 1)
                 {
                     element[1].changeY(y);
-                    console.log(element[1]);
+                    // console.log(element[1]);
                 }
                 else if(t === 2)
                 {
                     element.changeY(y);
-                    console.log(element);
+                    // console.log(element);
                 }
             });
         }
@@ -221,17 +221,17 @@
                 if(t === 0)
                 {
                     element[0].changeX(x);
-                    console.log(element[0]);
+                    // console.log(element[0]);
                 }
                 else if(t === 1)
                 {
                     element[1].changeX(x);
-                    console.log(element[1]);
+                    // console.log(element[1]);
                 }
                 else if(t === 2)
                 {
                     element.changeX(x);
-                    console.log(element);
+                    // console.log(element);
                 }
             });
         }
@@ -282,17 +282,17 @@
                 if(t === 0)
                 {
                     element[0].changeY(y);
-                    console.log(element[0]);
+                    // console.log(element[0]);
                 }
                 else if(t === 1)
                 {
                     element[1].changeY(y);
-                    console.log(element[1]);
+                    // console.log(element[1]);
                 }
                 else if(t === 2)
                 {
                     element.changeY(y);
-                    console.log(element);
+                    // console.log(element);
                 }
             });
         }
@@ -302,17 +302,17 @@
                 if(t === 0)
                 {
                     element[0].changeX(x);
-                    console.log(element[0]);
+                    //console.log(element[0]);
                 }
                 else if(t === 1)
                 {
                     element[1].changeX(x);
-                    console.log(element[1]);
+                    //console.log(element[1]);
                 }
                 else if(t === 2)
                 {
                     element.changeX(x);
-                    console.log(element);
+                    //console.log(element);
                 }
             });
         }
@@ -358,7 +358,7 @@
 
         TestAfficherObjetDansConsole()
         {
-            console.log(this);
+            //console.log(this);
         }
     }
 
@@ -372,7 +372,7 @@
             type = select.value;
         }
 
-        console.log(type);
+        //console.log(type);
 
         var divCercle = document.getElementById("divCercle");
         var divCarre = document.getElementById("divCarre");
@@ -389,432 +389,653 @@
             divCercle.style.display = "block";
         }
     }
+
+    function deplacer(id)
+    {
+        // let id = $(this).attr('id');
+
+        let type;
+
+        // valeur carre
+        let x1;
+        let x2;
+        let y1;
+        let y2;
+
+        // valeur cercle
+        let xc1;
+        let yc1;
+        let rayon;
+        //console.log(id);
+        document.getElementById('idAir').value = id;
+        //alert($(this).attr('id'));
+
+        //console.log(myobjectArea.ensembleObjectPoint);
+        // var result = myobjectArea.ensembleObjectPoint.filter(obj => {
+        //
+        // })
+        //console.log(objetmap.getObjetCarre(id));
+        let objetAll = objetmap.getObjet(id);
+        getEnsemblePoint();
+        changerDiv(type);
+
+        //console.log(objetmap);
+
+
+        function getEnsemblePoint()
+        {
+            objetAll.ensembleObjectPoint.forEach(element => {
+
+                if(element.r == null)
+                {
+                    x1 = element[0].x;
+                    x2 = element[1].x;
+                    y1 = element[0].y;
+                    y2 = element[1].y;
+                    type = "rect";
+                }
+                else
+                {
+                    xc1 = element.x;
+                    yc1 = element.y;
+                    rayon = element.r;
+                    type = "circle";
+                }
+
+            });
+        }
+
+        document.onkeydown = checkKey;
+
+        function checkKey(e) {
+
+            e = e || window.event;
+
+            if (e.keyCode == '38') {
+                deplacehaut();
+            }
+            else if (e.keyCode == '40') {
+                deplaceBas();
+            }
+            else if (e.keyCode == '37') {
+                deplaceGauche();
+            }
+            else if (e.keyCode == '39') {
+                deplaceDroite();
+            }
+
+
+        }
+
+        function AfficherListeArea()
+        {
+            var tablearea = document.getElementById('ListAllArea'),
+                table = document.createElement('table');
+
+            for (var i = 1; i < 4; i++) {
+                var tr = document.createElement('tr');
+
+                tr.appendChild( document.createElement('td') );
+                tr.appendChild( document.createElement('td') );
+
+                tr.cells[0].appendChild( document.createTextNode('Text1') )
+                tr.cells[1].appendChild( document.createTextNode('Text2') );
+
+                table.appendChild(tr);
+            }
+
+            tablearea.appendChild(table);
+        }
+
+        document.getElementById('x1').value = x1;
+        document.getElementById('x2').value = x2;
+        document.getElementById('y1').value = y1;
+        document.getElementById('y2').value = y2;
+
+        function deplaceDroite()
+        {
+            getEnsemblePoint();
+
+            if(type == "rect")
+            {
+                let parseX1 = parseInt(x1);
+                let parseX2 = parseInt(x2);
+
+                parseX1 += 1;
+                parseX2 += 1;
+                objetmap.changeXMap((parseX1).toString(), id, 0);
+                objetmap.changeXMap((parseX2).toString(), id, 1);
+                //objetmap.changeXMap((parseX2).toString(), id);
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                if(parseInt(x2) > parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 + 'px';
+                    div.style.top = y1 + 'px';
+                }
+                else if(parseInt(x2) < parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1- (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) > parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left =  x1 + 'px';
+                    div.style.top = y1 - (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) < parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1 + 'px';
+                }
+
+                area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
+
+                document.getElementById('x1').value = (parseX1).toString();
+                document.getElementById('x2').value = (parseX2).toString();
+            }
+            if(type == "circle")
+            {
+
+                let parseX = parseInt(xc1);
+
+                parseX += 1;
+
+                objetmap.changeXMap((parseX).toString(), id, 2);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                area.coords = xc1 + ',' + yc1 + ',' + rayon;
+
+                document.getElementById('xc1').value = (parseX).toString();
+
+            }
+        }
+
+        function deplaceGauche()
+        {
+            getEnsemblePoint();
+
+            if(type == "rect")
+            {
+                let parseX1 = parseInt(x1);
+                let parseX2 = parseInt(x2);
+
+                parseX1 -= 1;
+                parseX2 -= 1;
+                objetmap.changeXMap((parseX1).toString(), id, 0);
+                objetmap.changeXMap((parseX2).toString(), id, 1);
+                //objetmap.changeXMap((parseX2).toString(), id);
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                if(parseInt(x2) > parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 + 'px';
+                    div.style.top = y1 + 'px';
+                }
+                else if(parseInt(x2) < parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1- (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) > parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left =  x1 + 'px';
+                    div.style.top = y1 - (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) < parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1 + 'px';
+                }
+
+                area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
+
+                document.getElementById('x1').value = (parseX1).toString();
+                document.getElementById('x2').value = (parseX2).toString();
+            }
+            if(type == "circle")
+            {
+                let parseX = parseInt(xc1);
+
+                parseX -= 1;
+
+                objetmap.changeXMap((parseX).toString(), id, 2);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                area.coords = xc1 + ',' + yc1 + ',' + rayon;
+
+                document.getElementById('xc1').value = (parseX).toString();
+            }
+        }
+
+        function deplacehaut()
+        {
+            getEnsemblePoint();
+
+            if(type == "rect")
+            {
+                let parseY1 = parseInt(y1);
+                let parseY2 = parseInt(y2);
+
+                parseY1 -= 1;
+                parseY2 -= 1;
+                objetmap.changeYMap((parseY1).toString(), id, 0);
+                objetmap.changeYMap((parseY2).toString(), id, 1);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                if(parseInt(x2) > parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 + 'px';
+                    div.style.top = y1 + 'px';
+                }
+                else if(parseInt(x2) < parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1- (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) > parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left =  x1 + 'px';
+                    div.style.top = y1 - (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) < parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1 + 'px';
+                }
+
+                area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
+
+                document.getElementById('y1').value = (parseY1).toString();
+                document.getElementById('y2').value = (parseY2).toString();
+            }
+            if(type == "circle")
+            {
+                let parseY = parseInt(yc1);
+
+                parseY -= 1;
+
+                objetmap.changeYMap((parseY).toString(), id, 2);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                area.coords = xc1 + ',' + yc1 + ',' + rayon;
+
+                document.getElementById('yc1').value = (parseY).toString();
+            }
+        }
+
+        function deplaceBas()
+        {
+            getEnsemblePoint();
+
+            if(type == "rect")
+            {
+                let parseY1 = parseInt(y1);
+                let parseY2 = parseInt(y2);
+
+                parseY1 += 1;
+                parseY2 += 1;
+                objetmap.changeYMap((parseY1).toString(), id, 0);
+                objetmap.changeYMap((parseY2).toString(), id, 1);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                if(parseInt(x2) > parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 + 'px';
+                    div.style.top = y1 + 'px';
+                }
+                else if(parseInt(x2) < parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1- (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) > parseInt(x1) && parseInt(y2) < parseInt(y1))
+                {
+                    div.style.width = (x2 - x1) + 'px';
+                    div.style.height = (y1 - y2) + 'px';
+                    div.style.left =  x1 + 'px';
+                    div.style.top = y1 - (y1 - y2) + 'px';
+                }
+                else if (parseInt(x2) < parseInt(x1) && parseInt(y2) > parseInt(y1))
+                {
+                    div.style.width = (x1 - x2) + 'px';
+                    div.style.height = (y2 - y1) + 'px';
+                    div.style.left = x1 - (x1 - x2) + 'px';
+                    div.style.top = y1 + 'px';
+                }
+
+                area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
+
+                document.getElementById('y1').value = (parseY1).toString();
+                document.getElementById('y2').value = (parseY2).toString();
+            }
+            if(type == "circle")
+            {
+                let parseY = parseInt(yc1);
+
+                parseY += 1;
+
+                objetmap.changeYMap((parseY).toString(), id, 2);
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                area.coords = xc1 + ',' + yc1 + ',' + rayon;
+
+                document.getElementById('yc1').value = (parseY).toString();
+            }
+        }
+
+        document.getElementById('droite').onclick = function()
+        {
+            deplaceDroite();
+        }
+
+        document.getElementById('gauche').onclick = function()
+        {
+            deplaceGauche();
+        }
+
+        document.getElementById('bas').onclick = function()
+        {
+            deplaceBas();
+        }
+
+        document.getElementById('haut').onmousedown = function()
+        {
+            deplacehaut();
+        }
+
+        document.getElementById('modifier').onclick = function()
+        {
+            // Point 1
+            let x1 = document.getElementById("x1");
+            let y1 = document.getElementById("y1");
+
+            // point 2
+            let x2 = document.getElementById("x2");
+            let y2 = document.getElementById("y2");
+
+            // Si valeur null
+            if(x1.value.length === 0)
+            {
+                x1.value = 0;
+            }
+            if(y1.value.length === 0)
+            {
+                y1.value = 0;
+            }
+            if(x2.value.length === 0)
+            {
+                x2.value = 50;
+            }
+            if(y2.value.length === 0)
+            {
+                y2.value = 50;
+            }
+
+            objetmap.changeXMap(x1.value, id, 0);
+            objetmap.changeXMap(x2.value, id, 1);
+            objetmap.changeYMap(y1.value, id, 0);
+            objetmap.changeYMap(y2.value, id, 1);
+
+            let area = document.getElementById("area" + id);
+            let div = document.getElementById("div" + id);
+
+            if(parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+            {
+                div.style.width = (x2.value - x1.value) + 'px';
+                div.style.height = (y2.value - y1.value) + 'px';
+                div.style.left = x1.value + 'px';
+                div.style.top = y1.value + 'px';
+            }
+            else if(parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+            {
+                div.style.width = (x1.value - x2.value) + 'px';
+                div.style.height = (y1.value - y2.value) + 'px';
+                div.style.left = x1.value - (x1.value - x2.value) + 'px';
+                div.style.top = y1.value - (y1.value - y2.value) + 'px';
+            }
+            else if (parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+            {
+                div.style.width = (x2.value - x1.value) + 'px';
+                div.style.height = (y1.value - y2.value) + 'px';
+                div.style.left =  x1.value + 'px';
+                div.style.top = y1.value - (y1.value - y2.value) + 'px';
+            }
+            else if (parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+            {
+                div.style.width = (x1.value - x2.value) + 'px';
+                div.style.height = (y2.value - y1.value) + 'px';
+                div.style.left = x1.value - (x1.value - x2.value) + 'px';
+                div.style.top = y1.value + 'px';
+            }
+
+            area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
+        }
+    }
+
+    let objetmap = new objectMap('images/Krustytheclown.png', 'krusty', []);
+    document.getElementById('creer').onclick = function()
+    {
+        let select = document.getElementById("type");
+        let type = select.value;
+        //console.log(type);
+
+        if(type.length != 0)
+        {
+            if(type === "rect")
+            {
+                //console.log(type);
+
+                // Point 1
+                let x1 = document.getElementById("x1");
+                let y1 = document.getElementById("y1");
+
+                // point 2
+                let x2 = document.getElementById("x2");
+                let y2 = document.getElementById("y2");
+
+                // Si valeur null
+                if(x1.value.length === 0)
+                {
+                    x1.value = 0;
+                }
+                if(y1.value.length === 0)
+                {
+                    y1.value = 0;
+                }
+                if(x2.value.length === 0)
+                {
+                    x2.value = 50;
+                }
+                if(y2.value.length === 0)
+                {
+                    y2.value = 50;
+                }
+
+
+                let myObjet1 = new objectPoint(x1.value, y1.value);
+                let myObjet2 = new objectPoint(x2.value, y2.value);
+
+                let ensembleObjectPoint = [
+                    myObjet1,
+                    myObjet2
+                ];
+
+                let myobjectArea = new objectAreaCarre();
+
+                //console.log( myobjectArea.getEnsembleObjectPoint());
+
+                myobjectArea.idArea  = idArea += 1;
+                myobjectArea.TypeArea = type;
+                myobjectArea.ensembleObjectPoint = [];
+                myobjectArea.addEnsembleObjectPoint(ensembleObjectPoint);
+                //idArea += 1;
+
+                objetmap.addObjet(myobjectArea);
+
+                let map = document.getElementById("map");
+
+                let area = document.createElement("area");
+                area.shape = type;
+                area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
+                area.className = "areaMap";
+                area.href = "#";
+                area.id = "area" + (idArea).toString();
+
+                map.appendChild(area);
+
+                let div = document.getElementById("div-add");
+                div.appendChild(map);
+
+                let divVoirArea = document.getElementById("voirArea");
+                let rect = document.createElement('button');
+                rect.style.position = 'absolute';
+                rect.style.display = "block";
+                rect.style.opacity = "0.5";
+
+                if(parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+                {
+                    rect.style.width = (x2.value - x1.value) + 'px';
+                    rect.style.height = (y2.value - y1.value) + 'px';
+                    rect.style.left = x1.value + 'px';
+                    rect.style.top = y1.value + 'px';
+                }
+                else if(parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+                {
+                    rect.style.width = (x1.value - x2.value) + 'px';
+                    rect.style.height = (y1.value - y2.value) + 'px';
+                    rect.style.left = x1.value - (x1.value - x2.value) + 'px';
+                    rect.style.top = y1.value - (y1.value - y2.value) + 'px';
+                }
+                else if (parseInt(x2.value) > parseInt(x1.value) && parseInt(y2.value) < parseInt(y1.value))
+                {
+                    rect.style.width = (x2.value - x1.value) + 'px';
+                    rect.style.height = (y1.value - y2.value) + 'px';
+                    rect.style.left =  x1.value + 'px';
+                    rect.style.top = y1.value - (y1.value - y2.value) + 'px';
+                }
+                else if (parseInt(x2.value) < parseInt(x1.value) && parseInt(y2.value) > parseInt(y1.value))
+                {
+                    rect.style.width = (x1.value - x2.value) + 'px';
+                    rect.style.height = (y2.value - y1.value) + 'px';
+                    rect.style.left = x1.value - (x1.value - x2.value) + 'px';
+                    rect.style.top = y1.value + 'px';
+                }
+
+                rect.style.borderColor = "red";
+                rect.style.borderStyle = "solid";
+                rect.setAttribute("onClick", "deplacer(" + idArea + ")");
+                rect.id = "div" + (idArea).toString();
+                divVoirArea.appendChild(rect);
+
+                //console.log(objetmap);
+            }
+            else if(type === "circle")
+            {
+                // Point 1
+                let xc1 = document.getElementById("xc1");
+                let yc1 = document.getElementById("yc1");
+
+                // rayon
+                let rayon = document.getElementById("rayon");
+
+                if(xc1.value.length === 0)
+                {
+                    xc1.value = 0;
+                }
+                if(yc1.value.length === 0)
+                {
+                    yc1.value = 0;
+                }
+                if(rayon.value.length === 0)
+                {
+                    rayon.value = 50;
+                }
+
+                let myObjetPoint = new objectPoint(xc1.value, yc1.value, rayon.value);
+
+                let myObjetcCercle = new objectAreaCercle();
+                myObjetcCercle.idArea  = idArea += 1;
+                myObjetcCercle.ensembleObjectPoint = [];
+                myObjetcCercle.addEnsembleObjectPoint(myObjetPoint);
+
+                objetmap.addObjet(myObjetcCercle);
+
+                let map = document.getElementById("map");
+
+                let area = document.createElement("area");
+                area.shape = type;
+                area.coords = xc1.value + ',' + yc1.value + ',' + rayon.value;
+                area.className = "areaMap";
+                area.href = "#";
+                area.id = (idArea).toString();
+
+                map.appendChild(area);
+
+                let div = document.getElementById("div-add");
+                div.appendChild(map);
+
+            }
+        }
+        else
+        {
+            alert('Choisir son type');
+        }
+
+        // $("button[name=voirArea]").on('click', function () {
+        //
+        //     let id = $(this).attr('id');
+        //     //console.log(id);
+        //
+        // });
+
+    };
     $(document).ready(function () {
         // let nomMap = document.getElementById('nomMap');
         // console.log(nomMap);
-
-        let objetmap = new objectMap('images/Krustytheclown.png', 'krusty', []);
-
         document.getElementById("nomMap").value = "krusty";
-
-        document.getElementById('creer').onclick = function()
-        {
-            let select = document.getElementById("type");
-            let type = select.value;
-            //console.log(type);
-
-            if(type.length != 0)
-            {
-                if(type === "rect")
-                {
-                    //console.log(type);
-
-                    // Point 1
-                    let x1 = document.getElementById("x1");
-                    let y1 = document.getElementById("y1");
-
-                    // point 2
-                    let x2 = document.getElementById("x2");
-                    let y2 = document.getElementById("y2");
-
-                    // Si valeur null
-                    if(x1.value.length === 0)
-                    {
-                        x1.value = 0;
-                    }
-                    if(y1.value.length === 0)
-                    {
-                        y1.value = 0;
-                    }
-                    if(x2.value.length === 0)
-                    {
-                        x2.value = 50;
-                    }
-                    if(y2.value.length === 0)
-                    {
-                        y2.value = 50;
-                    }
-
-
-                    let myObjet1 = new objectPoint(x1.value, y1.value);
-                    let myObjet2 = new objectPoint(x2.value, y2.value);
-
-                    let ensembleObjectPoint = [
-                        myObjet1,
-                        myObjet2
-                    ];
-
-                    let myobjectArea = new objectAreaCarre();
-
-                    //console.log( myobjectArea.getEnsembleObjectPoint());
-
-                    myobjectArea.idArea  = idArea += 1;
-                    myobjectArea.TypeArea = type;
-                    myobjectArea.ensembleObjectPoint = [];
-                    myobjectArea.addEnsembleObjectPoint(ensembleObjectPoint);
-                    //idArea += 1;
-
-                    objetmap.addObjet(myobjectArea);
-
-                    let map = document.getElementById("map");
-
-                    let area = document.createElement("area");
-                    area.shape = type;
-                    area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
-                    area.className = "areaMap";
-                    area.href = "#";
-                    area.id = (idArea).toString();
-
-                    map.appendChild(area);
-
-                    let div = document.getElementById("div-add");
-                    div.appendChild(map);
-
-                    let divVoirArea = document.getElementById("voirArea");
-                    let rect = document.createElement('button');
-                    rect.style.position = 'absolute';
-                    rect.style.left = x1.value + 'px';
-                    rect.style.top = y1.value + 'px';
-                    rect.style.zIndex = "10";
-                    rect.style.display = "block";
-                    rect.style.width = x2.value + 'px';
-                    rect.style.height = y2.value + 'px';
-                    rect.style.borderColor = "red";
-                    rect.style.borderStyle = "solid";
-                    rect.onclick = deplacer;
-                    rect.id = (idArea).toString();
-                    divVoirArea.appendChild(rect);
-
-                    //console.log(objetmap);
-                }
-                else if(type === "circle")
-                {
-                    // Point 1
-                    let xc1 = document.getElementById("xc1");
-                    let yc1 = document.getElementById("yc1");
-
-                    // rayon
-                    let rayon = document.getElementById("rayon");
-
-                    if(xc1.value.length === 0)
-                    {
-                        xc1.value = 0;
-                    }
-                    if(yc1.value.length === 0)
-                    {
-                        yc1.value = 0;
-                    }
-                    if(rayon.value.length === 0)
-                    {
-                        rayon.value = 50;
-                    }
-
-                    let myObjetPoint = new objectPoint(xc1.value, yc1.value, rayon.value);
-
-                    let myObjetcCercle = new objectAreaCercle();
-                    myObjetcCercle.idArea  = idArea += 1;
-                    myObjetcCercle.ensembleObjectPoint = [];
-                    myObjetcCercle.addEnsembleObjectPoint(myObjetPoint);
-
-                    objetmap.addObjet(myObjetcCercle);
-
-                    let map = document.getElementById("map");
-
-                    let area = document.createElement("area");
-                    area.shape = type;
-                    area.coords = xc1.value + ',' + yc1.value + ',' + rayon.value;
-                    area.className = "areaMap";
-                    area.href = "#";
-                    area.id = (idArea).toString();
-
-                    map.appendChild(area);
-
-                    let div = document.getElementById("div-add");
-                    div.appendChild(map);
-
-                }
-            }
-            else
-            {
-                alert('Choisir son type');
-            }
-
-            function deplacer()
-            {
-
-                let id = $(this).attr('id');
-
-                let type;
-
-                // valeur carre
-                let x1;
-                let x2;
-                let y1;
-                let y2;
-
-                // valeur cercle
-                let xc1;
-                let yc1;
-                let rayon;
-                //console.log(id);
-                document.getElementById('idAir').value = id;
-                //alert($(this).attr('id'));
-
-                //console.log(myobjectArea.ensembleObjectPoint);
-                // var result = myobjectArea.ensembleObjectPoint.filter(obj => {
-                //
-                // })
-                //console.log(objetmap.getObjetCarre(id));
-                let objetAll = objetmap.getObjet(id);
-                getEnsemblePoint();
-                changerDiv(type);
-
-                //console.log(objetmap);
-
-
-                function getEnsemblePoint()
-                {
-                    objetAll.ensembleObjectPoint.forEach(element => {
-
-                        if(element.r == null)
-                        {
-                            x1 = element[0].x;
-                            x2 = element[1].x;
-                            y1 = element[0].y;
-                            y2 = element[1].y;
-                            type = "rect";
-                        }
-                        else
-                        {
-                            xc1 = element.x;
-                            yc1 = element.y;
-                            rayon = element.r;
-                            type = "circle";
-                        }
-
-                    });
-                }
-
-                function AfficherListeArea()
-                {
-                    var tablearea = document.getElementById('ListAllArea'),
-                        table = document.createElement('table');
-
-                    for (var i = 1; i < 4; i++) {
-                        var tr = document.createElement('tr');
-
-                        tr.appendChild( document.createElement('td') );
-                        tr.appendChild( document.createElement('td') );
-
-                        tr.cells[0].appendChild( document.createTextNode('Text1') )
-                        tr.cells[1].appendChild( document.createTextNode('Text2') );
-
-                        table.appendChild(tr);
-                    }
-
-                    tablearea.appendChild(table);
-                }
-
-                document.getElementById('x1').value = x1;
-                document.getElementById('x2').value = x2;
-                document.getElementById('y1').value = y1;
-                document.getElementById('y2').value = y2;
-
-                document.getElementById('droite').onclick = function()
-                {
-                    getEnsemblePoint();
-
-                    if(type == "rect")
-                    {
-                        let parseX1 = parseInt(x1);
-                        let parseX2 = parseInt(x2);
-
-                        parseX1 += 1;
-                        parseX2 += 1;
-                        objetmap.changeXMap((parseX1).toString(), id, 0);
-                        objetmap.changeXMap((parseX2).toString(), id, 1);
-                        //objetmap.changeXMap((parseX2).toString(), id);
-                        let area = document.getElementById(id);
-
-                        area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
-
-                        document.getElementById('x1').value = (parseX1).toString();
-                        document.getElementById('x2').value = (parseX2).toString();
-                    }
-                    if(type == "circle")
-                    {
-
-                        let parseX = parseInt(xc1);
-
-                        parseX += 1;
-
-                        objetmap.changeXMap((parseX).toString(), id, 2);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = xc1 + ',' + yc1 + ',' + rayon;
-
-                        document.getElementById('xc1').value = (parseX).toString();
-
-                    }
-                }
-
-                document.getElementById('gauche').onclick = function()
-                {
-                    getEnsemblePoint();
-
-                    if(type == "rect")
-                    {
-                        let parseX1 = parseInt(x1);
-                        let parseX2 = parseInt(x2);
-
-                        parseX1 -= 1;
-                        parseX2 -= 1;
-                        objetmap.changeXMap((parseX1).toString(), id, 0);
-                        objetmap.changeXMap((parseX2).toString(), id, 1);
-                        //objetmap.changeXMap((parseX2).toString(), id);
-                        let area = document.getElementById(id);
-
-                        area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
-
-                        document.getElementById('x1').value = (parseX1).toString();
-                        document.getElementById('x2').value = (parseX2).toString();
-                    }
-                    if(type == "circle")
-                    {
-                        let parseX = parseInt(xc1);
-
-                        parseX -= 1;
-
-                        objetmap.changeXMap((parseX).toString(), id, 2);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = xc1 + ',' + yc1 + ',' + rayon;
-
-                        document.getElementById('xc1').value = (parseX).toString();
-                    }
-                }
-
-                document.getElementById('bas').onclick = function()
-                {
-                    getEnsemblePoint();
-
-                    if(type == "rect")
-                    {
-                        let parseY1 = parseInt(y1);
-                        let parseY2 = parseInt(y2);
-
-                        parseY1 += 1;
-                        parseY2 += 1;
-                        objetmap.changeYMap((parseY1).toString(), id, 0);
-                        objetmap.changeYMap((parseY2).toString(), id, 1);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
-
-                        document.getElementById('y1').value = (parseY1).toString();
-                        document.getElementById('y2').value = (parseY2).toString();
-                    }
-                    if(type == "circle")
-                    {
-                        let parseY = parseInt(yc1);
-
-                        parseY += 1;
-
-                        objetmap.changeYMap((parseY).toString(), id, 2);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = xc1 + ',' + yc1 + ',' + rayon;
-
-                        document.getElementById('yc1').value = (parseY).toString();
-                    }
-                }
-
-                document.getElementById('haut').onclick = function()
-                {
-                    getEnsemblePoint();
-
-                    if(type == "rect")
-                    {
-                        let parseY1 = parseInt(y1);
-                        let parseY2 = parseInt(y2);
-
-                        parseY1 -= 1;
-                        parseY2 -= 1;
-                        objetmap.changeYMap((parseY1).toString(), id, 0);
-                        objetmap.changeYMap((parseY2).toString(), id, 1);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
-
-                        document.getElementById('y1').value = (parseY1).toString();
-                        document.getElementById('y2').value = (parseY2).toString();
-                    }
-                    if(type == "circle")
-                    {
-                        let parseY = parseInt(yc1);
-
-                        parseY -= 1;
-
-                        objetmap.changeYMap((parseY).toString(), id, 2);
-
-                        let area = document.getElementById(id);
-
-                        area.coords = xc1 + ',' + yc1 + ',' + rayon;
-
-                        document.getElementById('yc1').value = (parseY).toString();
-                    }
-                }
-
-                document.getElementById('modifier').onclick = function()
-                {
-                    // Point 1
-                    let x1 = document.getElementById("x1");
-                    let y1 = document.getElementById("y1");
-
-                    // point 2
-                    let x2 = document.getElementById("x2");
-                    let y2 = document.getElementById("y2");
-
-                    // Si valeur null
-                    if(x1.value.length === 0)
-                    {
-                        x1.value = 0;
-                    }
-                    if(y1.value.length === 0)
-                    {
-                        y1.value = 0;
-                    }
-                    if(x2.value.length === 0)
-                    {
-                        x2.value = 50;
-                    }
-                    if(y2.value.length === 0)
-                    {
-                        y2.value = 50;
-                    }
-
-                    objetmap.changeXMap(x1.value, id, 0);
-                    objetmap.changeXMap(x2.value, id, 1);
-                    objetmap.changeYMap(y1.value, id, 0);
-                    objetmap.changeYMap(y2.value, id, 1);
-
-                    let area = document.getElementById(id);
-                    area.coords = x1.value + ',' + y1.value + ',' + x2.value + ',' + y2.value;
-                }
-            }
-
-            $("button[name=voirArea]").on('click', function () {
-
-                let id = $(this).attr('id');
-                console.log(id);
-
-            });
-        };
     });
 
 </script>
