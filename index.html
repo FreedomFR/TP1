@@ -14,8 +14,11 @@
             <map name="shapes-map" id="map"></map>
             <br>
             <br>
-            <div id="ListAllArea">
+            <div>
                 <label>Liste des aires de la map</label>
+                <div id="ListAllArea" class="pointObjet" style="min-height: 100px; min-width: 400px">
+
+                </div>
             </div>
         </div>
         <div class="div2">
@@ -156,6 +159,17 @@
                 if (parseInt(element.getId()) === parseInt(id))
                 {
                     element.setChangeY(y, t);
+                    //console.log(element);
+                }
+            });
+        }
+
+        changeRMap(r, id, t)
+        {
+            this.objetArea.forEach(element => {
+                if (parseInt(element.getId()) === parseInt(id))
+                {
+                    element.setChangeR(r, t);
                     //console.log(element);
                 }
             });
@@ -318,6 +332,13 @@
             });
         }
 
+        setChangeR(r)
+        {
+            this.ensembleObjectPoint.forEach(element => {
+                element.changeR(r);
+            });
+        }
+
 
 
         TestAfficherObjetDansConsole()
@@ -461,31 +482,12 @@
 
         }
 
-        function AfficherListeArea()
-        {
-            var tablearea = document.getElementById('ListAllArea'),
-                table = document.createElement('table');
-
-            for (var i = 1; i < 4; i++) {
-                var tr = document.createElement('tr');
-
-                tr.appendChild( document.createElement('td') );
-                tr.appendChild( document.createElement('td') );
-
-                tr.cells[0].appendChild( document.createTextNode('Text1') )
-                tr.cells[1].appendChild( document.createTextNode('Text2') );
-
-                table.appendChild(tr);
-            }
-
-            tablearea.appendChild(table);
-        }
-
         document.getElementById('x1').value = x1;
         document.getElementById('x2').value = x2;
         document.getElementById('y1').value = y1;
         document.getElementById('y2').value = y2;
 
+        // Déplacer vers la droite
         function deplaceDroite()
         {
             getEnsemblePoint();
@@ -559,6 +561,7 @@
             }
         }
 
+        // Déplacer vers la gauche
         function deplaceGauche()
         {
             getEnsemblePoint();
@@ -629,7 +632,7 @@
                 document.getElementById('xc1').value = (parseX).toString();
             }
         }
-
+        // Déplacer vers le haut
         function deplacehaut()
         {
             getEnsemblePoint();
@@ -699,7 +702,7 @@
                 document.getElementById('yc1').value = (parseY).toString();
             }
         }
-
+        // Déplacer vers le bas
         function deplaceBas()
         {
             getEnsemblePoint();
@@ -771,21 +774,19 @@
             }
         }
 
+        // Déplacer avec les boutton
         document.getElementById('droite').onclick = function()
         {
             deplaceDroite();
         }
-
         document.getElementById('gauche').onclick = function()
         {
             deplaceGauche();
         }
-
         document.getElementById('bas').onclick = function()
         {
             deplaceBas();
         }
-
         document.getElementById('haut').onmousedown = function()
         {
             deplacehaut();
@@ -883,6 +884,20 @@
                     rayon.value = 30;
                 }
 
+                objetmap.changeXMap(xc1.value, id, 2);
+                objetmap.changeYMap(yc1.value, id, 2);
+                objetmap.changeRMap(rayon.value, id, 2)
+
+
+                let area = document.getElementById("area" + id);
+                let div = document.getElementById("div" + id);
+
+                div.style.height = rayon.value * 2 + "px";
+                div.style.width = rayon.value * 2 + "px";
+                div.style.top = yc1.value - rayon.value + "px";
+                div.style.left = xc1.value - rayon.value + "px";
+
+                area.coords = xc1.value + ',' + yc1.value + ',' + rayon.value;
 
             }
         }
@@ -1064,18 +1079,41 @@
                 cercle.style.borderWidth = "2px";
                 cercle.setAttribute("onClick", "deplacer(" + idArea + ")");
                 cercle.style.borderStyle = "solid";
-                cercle.style.top = xc1.value - rayon.value + "px";
-                cercle.style.left = yc1.value - rayon.value + "px";
+                cercle.style.top = yc1.value - rayon.value + "px";
+                cercle.style.left = xc1.value - rayon.value + "px";
 
 
                 cercle.id = "div" + (idArea).toString();
                 divVoirArea.appendChild(cercle);
 
             }
+
+            AfficherListeArea((idArea).toString());
         }
         else
         {
             alert('Choisir son type');
+        }
+
+        function AfficherListeArea(id)
+        {
+            let divArea = document.getElementById('ListAllArea');
+            let div = document.createElement('divList' + id);
+
+            let divContent = document.createElement('divC');
+            let button = document.createElement('button');
+            let hr = document.createElement("hr");
+            let br = document.createElement("br");
+
+            divContent.innerText = "Id de l'aire :" + id;
+            divContent.append(br);
+            button.setAttribute("onClick", "deplacer(" + id + ")");
+            button.className = "btn btn-default";
+            button.innerText = "Selectionner";
+            div.append(divContent);
+            div.append(button);
+            div.append(hr);
+            divArea.appendChild(div);
         }
     };
     $(document).ready(function () {
